@@ -1,5 +1,7 @@
 FROM node:lts-alpine
 
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
 # install simple http server for serving static content
 RUN npm install -g http-server
 
@@ -17,6 +19,8 @@ COPY . .
 
 # build app for production with minification
 RUN npm run build
+
+RUN npm run generate
 
 EXPOSE 8080
 CMD [ "http-server", "dist" ]
