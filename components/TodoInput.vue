@@ -1,8 +1,8 @@
 <template>
     <div class="todo-input-container">
-        <input v-model="inputVal" class="todo-input form-control" @keydown.enter="addTodo"
+        <input v-model="inputVal" class="todo-input form-control" @keydown.enter="addTodo" :maxlength="maxlength"
                type="text" placeholder="New Todo" aria-label="Search" aria-describedby="basic-addon1" />
-        <button @click="addTodo" type="button" class="todo-add btn btn-dark">Add</button>
+        <button @click="addTodo" type="button" class="todo-add btn btn-dark" aria-label="Add Todo">Add</button>
     </div>
 </template>
 
@@ -16,11 +16,13 @@ export default Vue.extend({
     data() {
         return {
             inputVal: '',
+            maxlength: 140
         }
     },
     methods: {
         addTodo() {
             this.list.push({text: this.inputVal, isDone: false});
+            this.inputVal = '';
         }
     }
 });
@@ -28,17 +30,19 @@ export default Vue.extend({
 
 <style scoped>
 .todo-input-container {
-    margin: 5px;
+    display: grid;
+    gap: 5px;
+    grid-template-areas: "input add";
+    grid-template-columns: 85% 15%;
+    grid-template-rows: auto;
 }
 
 .todo-input {
-    display: inline-block;
-    width: 80%;
+    grid-area: input;
 }
 
 .todo-add {
-    display: inline-block;
-    width: 15%;
-    margin-left: 5px;
+    grid-area: add;
+    align-self: right;
 }
 </style>
