@@ -1,9 +1,11 @@
 <template>
     <ul class="list-group">
-        <li v-for="(item, index) in list" class="list-group-item">
-            <input @change="toggle(item)" :checked="item.done" class="todo-checkbox" type="checkbox" aria-label="Checkbox for Todo Item">
+        <li v-for="(item, index) in todoList" class="list-group-item">
+            <input @change="toggle(item)" :checked="item.done" class="todo-checkbox" type="checkbox"
+                aria-label="Checkbox for Todo Item">
             <span class="todo-text" :class="{ done: item.done }"> {{ item.text }} </span>
-            <button @click="deleteTodo(index)" type="button" class="todo-delete btn btn-close" aria-label="Delete Todo Item">X</button>
+            <button @click="deleteTodo(index)" type="button" class="todo-delete btn btn-close"
+                aria-label="Delete Todo Item">X</button>
         </li>
     </ul>
 </template>
@@ -14,7 +16,11 @@ import { mapMutations } from 'vuex';
 
 export default Vue.extend({
     name: 'TodoList',
-    props: ['list'],
+    computed: {
+        todoList() {
+            return this.$store.state.todos.list
+        }
+    },
     methods: {
         ...mapMutations({
             toggle: 'todos/toggle'

@@ -2,10 +2,10 @@
   <div class="todo-app">
     <h3 class="app-title">Todo App</h3>
     <div class="app-input">
-      <TodoInput :list="todoList" />
+      <TodoInput/>
     </div>
     <div class="app-list">
-      <TodoList :list="todoList" />
+      <TodoList/>
     </div>
   </div>
 </template>
