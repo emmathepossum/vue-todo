@@ -1,14 +1,13 @@
 <template>
     <div class="todo-input-container">
         <input v-model="inputVal" class="todo-input form-control" @keydown.enter="addTodo" :maxlength="maxlength"
-               type="text" placeholder="New Todo" aria-label="Search" aria-describedby="basic-addon1" />
+            type="text" placeholder="New Todo" aria-label="New Todo Input Field" aria-describedby="basic-addon1" />
         <button @click="addTodo" type="button" class="todo-add btn btn-dark" aria-label="Add Todo">Add</button>
     </div>
 </template>
 
 <script lang="ts">
-import { stringLiteral } from '@babel/types';
-import Vue from 'vue'
+import Vue from 'vue';
 
 export default Vue.extend({
     name: 'TodoInput',
@@ -21,8 +20,10 @@ export default Vue.extend({
     },
     methods: {
         addTodo() {
-            this.list.push({text: this.inputVal, isDone: false});
-            this.inputVal = '';
+            if (this.inputVal) {
+                this.$store.commit('todos/add', this.inputVal);
+                this.inputVal = '';
+            }
         }
     }
 });

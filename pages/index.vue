@@ -11,10 +11,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
 import TodoInput from '../components/TodoInput.vue';
 import TodoList from '../components/TodoList.vue';
-import type TodoListInterface from '~/interfaces/TodoList.interface';
 
 export default Vue.extend({
   name: 'IndexPage',
@@ -22,25 +21,17 @@ export default Vue.extend({
     TodoInput,
     TodoList
   },
-  data() {
-    return {
-      todoList: [] as TodoListInterface[]
+  computed: {
+    todoList() {
+      return this.$store.state.todos.list
     }
   },
   mounted() {
-    if (localStorage.todoList) {
-      this.todoList = JSON.parse(localStorage.todoList);
-    }
+    this.$store.commit('todos/init');
+    this.$store.subscribe( (mutation, state) => {
+      localStorage.todoList = JSON.stringify(state.todos.list);
+    });
   },
-  watch: {
-    todoList: {
-      deep: true,
-      handler(newTodoList) {
-        localStorage.todoList = JSON.stringify(newTodoList);
-      }
-    }
-
-  }
 })
 </script>
 
@@ -57,6 +48,7 @@ body {
 .app-input {
   margin-bottom: 15px;
 }
+
 .todo-app {
   width: 50%;
   max-width: 600px;
